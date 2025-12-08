@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects - IntecGIB</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="img/misc/logo_intecgib.png" alt="IntecGIB Logo">
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="residential.html" class="nav-link">Residential</a></li>
+                <li class="nav-item"><a href="business.html" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link active">Projects</a></li>
+				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
+                <li class="nav-item">
+                    <a href="login.php" class="user-icon" id="userLogin">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Our Projects</h1>
+        <!-- Filters bar -->
+        <div class="filters-bar" id="projectsFilters" style="margin-top: 1rem;">
+            <div class="filters-row container-small">
+                <input type="text" id="filterName" placeholder="Search projects by name..." class="filter-input">
+
+                <select id="sortBy" class="filter-select">
+                    <option value="alphabetical">Sort: Alphabetical (A–Z)</option>
+                    <option value="updated">Sort: Last updated</option>
+                </select>
+
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All statuses</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="future">Future</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="adminControls" style="display: none; margin-bottom: 1rem; display:flex; gap:10px; align-items:center;">
+            <button id="addProjectButton" class="cta-button">Add New Project</button>
+            <button id="editProjectsBtn" class="cta-button secondary">
+                Edit Projects Mode
+            </button>
+            <button id="saveChangesBtn" class="cta-button" style="display: none;">
+                Save Changes
+            </button>
+        </div>
+        
+        <!-- Reviews widget for projects page (shows average and recent reviews)
+        <section class="reviews-section container" style="margin-top:1rem; margin-bottom:1.5rem">
+            <h2>Customer Reviews</h2>
+            <div id="reviewsContainerProjects"></div>
+        </section> -->
+
+        <div id="projectsContainer">
+            <!-- Projects will be loaded here by JavaScript with spinner -->
+        </div>
+    </main>
+
+    <div id="projectModal" class="modal fullscreen-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="projectTitle"></h2>
+            <p id="projectDescription"></p>
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="carousel-main">
+                        <img id="carouselMainImage" src="" alt="Project image" class="carousel-main-img">
+                        <button class="carousel-btn carousel-btn-prev" id="carouselPrev">❮</button>
+                        <button class="carousel-btn carousel-btn-next" id="carouselNext">❯</button>
+                        <button class="carousel-btn carousel-btn-zoom" id="carouselZoom" title="Ampliar imagen">🔍</button>
+                    </div>
+                    <div class="carousel-thumbnails" id="carouselThumbnails">
+                        <!-- Thumbnails will be loaded here -->
+                    </div>
+                    <div class="carousel-counter">
+                        <span id="carouselCounter">1 / 1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for zoomed images -->
+    <div id="lightboxModal" class="modal lightbox-modal">
+        <div class="lightbox-content">
+            <span class="close">&times;</span>
+            <img id="lightboxImage" src="" alt="Zoomed image" class="lightbox-image">
+            <button class="lightbox-btn lightbox-btn-prev" id="lightboxPrev">❮</button>
+            <button class="lightbox-btn lightbox-btn-next" id="lightboxNext">❯</button>
+            <div class="lightbox-counter">
+                <span id="lightboxCounter">1 / 1</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="addProjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Project</h2>
+            <form id="addProjectForm" enctype="multipart/form-data">
+                <input type="text" name="projectName" placeholder="Project Name" required>
+                <textarea name="projectDescription" placeholder="Project Description" required></textarea>
+                <select name="projectStatus" required>
+                    <option value="1">Completed Project</option>
+                    <option value="2">Project on Progress</option>
+                    <option value="3">Future Project</option>
+                </select>
+                <label>Upload project images (1-6 images):</label>
+                <input type="file" name="projectImages[]" multiple accept="image/*" required>
+                <small style="display: block; margin-top: 5px; color: var(--text-secondary);">
+                    Allowed formats: JPG, JPEG, PNG, GIF. Max size: 5MB per image.
+                </small>
+                <button type="submit">Add Project</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Delete Project</h2>
+            <p id="deleteConfirmText">Are you sure you want to delete this project?</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="confirmDeleteBtn" class="cta-button" style="background: #dc3545;">Delete</button>
+                <button id="cancelDeleteBtn" class="cta-button secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin-nav.js"></script>
+    <script src="js/reviews.js"></script>
+    <!-- Floating Review Button -->
+    <script src="js/floating-review-button.js"></script>
+    <script>
+        if(window.ReviewsWidget){
+            window.addEventListener('DOMContentLoaded', function(){
+                // Initialize reviews widget but hide the inline form on projects page
+                ReviewsWidget.init('#reviewsContainerProjects', 'projects.html', { showForm: false });
+            });
+        }
+    </script>
+</body>
+</html>

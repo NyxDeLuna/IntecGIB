@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - IntecGIB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="img/misc/logo_intecgib.png" alt="IntecGIB Logo">
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="residential.html" class="nav-link">Residential</a></li>
+                <li class="nav-item"><a href="business.html" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
+				<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
+                <li class="nav-item">
+                    <a href="login.php" class="user-icon" id="userLogin">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Our Services</h1>
+        
+        <div class="service-info">
+            <h2>Service Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Maintenance Service</h3>
+                    <p>£80 per technician per hour</p>
+                    <ul>
+                        <li>System diagnostics and troubleshooting</li>
+                        <li>Regular maintenance checks</li>
+                        <li>Software updates and optimization</li>
+                        <li>Component testing and replacement</li>
+                        <li>24/7 emergency support available</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Installation Service</h3>
+                    <p>£150 per technician per hour</p>
+                    <ul>
+                        <li>New system installation</li>
+                        <li>Equipment setup and configuration</li>
+                        <li>System integration with existing infrastructure</li>
+                        <li>Testing and commissioning</li>
+                        <li>User training and documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews widget for services page -->
+        <section class="reviews-section container" style="margin-top:2rem">
+            <h2>Customer Reviews</h2>
+            <div id="reviewsContainerServices"></div>
+        </section>
+		
+        <div class="services-intro">
+            <p>Choose between maintenance or installation services. Our professional technicians are ready to assist you with your automation needs.</p>
+        </div>
+
+        <div class="service-calculator">
+            <h2>Service Calculator</h2>
+            <p>Configure your service and get an instant price quote</p>
+            
+            <form id="serviceForm" class="service-form">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <select id="serviceType" name="serviceType" required>
+                        <option value="">Select a service</option>
+                        <option value="maintenance">Maintenance Service (£80 per technician/hour)</option>
+                        <option value="installation">Installation Service (£150 per technician/hour)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="technicians">Number of Technicians</label>
+                    <select id="technicians" name="technicians" required>
+                        <option value="1">1 Technician</option>
+                        <option value="2" selected>2 Technicians</option>
+                        <option value="3">3 Technicians</option>
+                        <option value="4">4 Technicians</option>
+                        <option value="5">5 Technicians</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="hours">Number of Hours</label>
+                    <select id="hours" name="hours" required>
+                        <option value="1">1 Hour</option>
+                        <option value="2" selected>2 Hours</option>
+                        <option value="3">3 Hours</option>
+                        <option value="4">4 Hours</option>
+                        <option value="5">5 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="7">7 Hours</option>
+                        <option value="8">8 Hours</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceDate">Preferred Date</label>
+                    <input type="date" id="serviceDate" name="serviceDate" required min="">
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceTime">Preferred Time</label>
+                    <select id="serviceTime" name="serviceTime" required>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" id="customerName" name="customerName" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">Email Address</label>
+                    <input type="email" id="customerEmail" name="customerEmail" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" placeholder="+350 540 12345" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceAddress">Service Address</label>
+                    <textarea id="serviceAddress" name="serviceAddress" placeholder="Full address where service will be performed" required rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceDetails">Service Details / Special Requirements</label>
+                    <textarea id="serviceDetails" name="serviceDetails" placeholder="Please describe your specific needs, existing systems, or any special requirements..." rows="5"></textarea>
+                </div>
+
+                <div class="price-summary">
+                    <h3>Price Summary</h3>
+                    <div class="price-details">
+                        <div class="price-row">
+                            <span>Service Type:</span>
+                            <span id="priceServiceType">-</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Technicians × Hours:</span>
+                            <span id="priceWorkersHours">-</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Amount:</span>
+                            <span id="priceTotal">£0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-options">
+                    <h3>Payment Options</h3>
+                    <p>Complete your booking by paying securely through PayPal</p>
+                    <div class="paypal-buttons" id="paypal-button-container">
+                        <!--<p class="payment-message">Please calculate the price first</p>-->
+                    </div>
+                    <p class="payment-note">You will be redirected to PayPal to complete your payment. Credit/debit cards also accepted.</p>
+                </div>
+
+                <input type="hidden" id="totalAmount" name="totalAmount" value="0">
+                <input type="hidden" id="paypalTransactionId" name="paypalTransactionId" value="">
+                
+                <div class="form-buttons">
+                    <button type="button" id="payWithPayPalBtn" class="cta-button" disabled>
+                        Pay - £<span id="submitAmount">0.00</span>
+                    </button>
+                </div>
+            </form>
+		</div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="success-content">
+                <h2>Congrats on making your purchase!</h2>
+                <p>We will contact you as soon as possible.</p>
+                <p><strong>Purchase ID:</strong> <span id="referenceNumber"></span></p>
+                <p><strong>Total Paid:</strong> <span id="confirmedAmount"></span></p>
+
+                <!-- Invoice actions (se llenarán desde JS) -->
+                <div id="invoiceActions" style="margin-top:16px"></div>
+
+                <div style="margin-top:12px">
+                    <button onclick="window.location.href='services.html'" class="cta-button">Book Another Service</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.paypal.com/sdk/js?client-id=AWO0SBvepzyGzSQYWdOpAcbx28YddlRE6Q6T1lj6BkDhMENk6IvcihYnfArameohT9U_JREyI05WoCTY&currency=GBP&components=buttons&intent=capture"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin-nav.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/reviews.js"></script>
+    <!-- Floating Review Button -->
+    <script src="js/floating-review-button.js"></script>
+    <script>
+        if(window.ReviewsWidget){
+            window.addEventListener('DOMContentLoaded', function(){
+                ReviewsWidget.init('#reviewsContainerServices', 'services.html');
+            });
+        }
+    </script>
+</body>
+</html>

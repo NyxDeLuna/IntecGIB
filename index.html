@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntecGIB - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="img/misc/logo_intecgib.png" alt="IntecGIB Logo">
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="residential.html" class="nav-link">Residential</a></li>
+                <li class="nav-item"><a href="business.html" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
+                <li class="nav-item">
+                    <a href="login.php" class="user-icon" id="userLogin">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero animate-fade-in-down">
+        <div class="hero-content">
+            <h1>Welcome to IntecGIB</h1>
+            <p>Your trusted partner in integrated solutions for residential and business automation</p>
+            <a href="projects.html" class="cta-button">View Our Projects</a>
+        </div>
+    </section>
+
+    <section class="services-overview animate-fade-in">
+        <div class="container animate-fade-in">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Residential Solutions</h3>
+                    <p>Smart home automation for modern living</p>
+                    <a href="residential.html" class="service-link">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <h3>Business Solutions</h3>
+                    <p>Enterprise-grade automation systems</p>
+                    <a href="business.html" class="service-link">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="company-info animate-fade-in">
+        <div class="container animate-fade-in">
+            <h2>Why Choose IntecGIB?</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Expertise</h3>
+                    <p>Years of experience in integrated solutions</p>
+                </div>
+                <div class="info-item">
+                    <h3>Quality</h3>
+                    <p>Premium materials and workmanship</p>
+                </div>
+                <div class="info-item">
+                    <h3>Support</h3>
+                    <p>24/7 customer support and maintenance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="cookiesBanner" class="cookies-banner">
+        <div class="cookies-content">
+            <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <button id="acceptCookies" class="cookies-button">Accept</button>
+            <a href="cookies.html" class="cookies-link">Learn More</a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin-nav.js"></script>
+    <!-- Floating Review Button -->
+    <script src="js/floating-review-button.js"></script>
+</body>
+</html>

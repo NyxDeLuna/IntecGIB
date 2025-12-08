@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - IntecGIB</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="img/misc/logo_intecgib.png" alt="IntecGIB Logo">
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="residential.html" class="nav-link">Residential</a></li>
+                <li class="nav-item"><a href="business.html" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+                <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
+                <li class="nav-item">
+                    <a href="login.php" class="user-icon" id="userLogin">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg> <!-- Icono SVG para usuario -->
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Contact IntecGIB</h1>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                <div class="contact-details">
+                    <p><strong>Email:</strong> support@intecgib.com</p>
+                    <p><strong>Phone:</strong> +350 54063766</p>
+                    <p><strong>Address:</strong> Europa Business Centre - Unit F18 - P.O. Box 1387 GX11 1AA Gibraltar</p>
+                </div>
+                <div class="direct-email" style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 5px;">
+                    <h3>Send Email Directly</h3>
+                    <p>Or click here to open your email client:</p>
+                    <a href="mailto:support@intecgib.com?subject=Contact from IntecGIB Website" 
+                       class="cta-button" style="display: inline-block; margin-top: 10px;">
+                        Open Email Client
+                    </a>
+                </div>
+            </div>
+            
+            <form id="contactForm" class="contact-form">
+                <input type="text" name="name" id="contactName" placeholder="Your Name" required>
+                <input type="email" name="email" id="contactEmail" placeholder="Your Email" required>
+                <input type="text" name="subject" id="contactSubject" placeholder="Subject" required>
+                <textarea name="message" id="contactMessage" placeholder="Your Message" rows="6" required></textarea>
+                
+                <button type="submit" id="sendEmailBtn">Send Message</button>
+                
+                <div class="form-note" style="margin-top: 15px; font-size: 14px; color: #666; background: #fff3cd; padding: 10px; border-radius: 5px;">
+                    <p><strong>Note:</strong> This will open your email client with your message pre-filled. Just click "Send" in your email program.</p>
+                </div>
+            </form>
+        </div>
+        
+        <div id="emailDataCopy" style="display: none; margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 5px;">
+            <h3>Copy Email Details</h3>
+            <p>If your email client didn't open, copy this information:</p>
+            
+            <div style="background: white; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                <p><strong>To:</strong> <span id="copyTo">support@intecgib.com</span></p>
+                <p><strong>Subject:</strong> <span id="copySubject"></span></p>
+                <p><strong>Body:</strong></p>
+                <pre id="copyBody" style="background: #f8f9fa; padding: 10px; border-radius: 3px; white-space: pre-wrap;"></pre>
+            </div>
+            
+            <button id="copyAllBtn" class="cta-button" style="background: #28a745;">
+                Copy All to Clipboard
+            </button>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin-nav.js"></script>
+    <!-- Floating Review Button -->
+    <script src="js/floating-review-button.js"></script>
+</body>
+</html>
