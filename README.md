@@ -6,6 +6,8 @@
 
 IntecGIB es una plataforma web completa para una empresa de soluciones de automatización. El sitio proporciona información sobre servicios residenciales y comerciales, gestión de proyectos, reserva de servicios con integración PayPal, descarga de facturas PDF, sistema de reseñas con moderación admin, e icono flotante de reseñas en tiempo real.
 
+**IMPORTANTE:** Este repositorio web trabaja con los puertos 80 y 4433 de Apache.
+
 ---
 
 ## 🌐 Páginas del Sitio
@@ -51,7 +53,7 @@ IntecGIB es una plataforma web completa para una empresa de soluciones de automa
 
 **Contenido:**
 - **Hero Section:** Imagen de fondo + texto introductorio
-- **Intro Section:** Descripción + lista de features (⚡🛡️🎵🌡️)
+- **Intro Section:** Descripción + lista de features
 - **Services Grid:** 6 tarjetas con servicios:
   - Lighting Control Systems
   - Climate Control & HVAC
@@ -200,7 +202,7 @@ IntecGIB es una plataforma web completa para una empresa de soluciones de automa
 
 ---
 
-## 🎨 Cambios Recientes (Diciembre 2025)
+## 🎨 Cambios Versión V10.4 (Diciembre 2025)
 
 ### 1. **Icono Flotante de Reseñas** ⭐
 - Botón circular en esquina inferior izquierda en TODAS las páginas
@@ -229,7 +231,7 @@ IntecGIB es una plataforma web completa para una empresa de soluciones de automa
   - `$conn` — MySQLi (legacy)
 - Tabla `reviews` con campos completos: id, name, email, rating, comment, page, approved, timestamps
 
-### 5. **Admin Panel Mejorado**
+### 5. **Admin Panel**
 - **Reviews Management:** Tabla interactiva con filtros, approve/delete, export PDF
 - **Projects Management:** Gestión de proyectos con edición y eliminación
 - **Estadísticas:** Cards con totales (reviews totales, aprobadas, pendientes, proyectos)
@@ -279,34 +281,6 @@ CREATE TABLE `reviews` (
 - ✅ Session Authentication: Verificación de `$_SESSION['logged_in']` en endpoints admin
 - ✅ Email Privacy: Campo email no se muestra públicamente
 - ✅ CSRF: Validación implícita en sesión
-
----
-
-## 📂 Cambios en Estructura de Archivos
-
-### Nuevos Archivos
-```
-js/floating-review-button.js          # Widget ⭐ flotante
-api/filter_reviews.php                # Filtrado de reseñas (admin)
-api/export_reviews_pdf.php            # Export a PDF (admin)
-api/approve_review.php                # Aprobar reseña (admin)
-api/delete_review.php                 # Eliminar reseña (admin)
-```
-
-### Archivos Modificados
-```
-config/database.php                   # Añadida conexión MySQLi
-css/style.css                         # Color botones + animaciones
-residential.html                      # Clases animate-fade-in
-js/reviews.js                         # Param options para showForm
-admin.php                             # Panel mejorado (filtros, export)
-[todas las .html]                     # exit-review.js → floating-review-button.js
-```
-
-### Eliminados
-```
-js/exit-review.js                     # Reemplazado por floating-review-button.js
-```
 
 ---
 
@@ -388,7 +362,7 @@ intecgib/
 │   ├── invoice_config.php       # Rutas de facturas
 │   ├── generate_invoice.php     # Generador de PDF (Dompdf)
 │   ├── paypal.php               # Credenciales PayPal
-│   └── send_email.php           # Helper de email (eliminado)
+│   └── send_email.php           # Helper de email (en desuso)
 │
 ├── css/
 │   ├── style.css                # Estilos principales
@@ -586,20 +560,6 @@ mkdir logs
 
 # 5. Acceder a http://localhost/intecgib/index.html
 ```
-
----
-
-## 📈 Mejoras Futuras
-
-- [x] Panel de admin para gestión de proyectos y reseñas
-- [ ] Sincronización con APIs de terceros
-- [ ] Analytics avanzado
-- [ ] Chatbot de soporte
-- [x] Sistema de reseñas de clientes (con moderación)
-- [ ] Blog de noticias y tutoriales
-- [ ] Integración con redes sociales
-
----
 
 ## 📧 Soporte
 
