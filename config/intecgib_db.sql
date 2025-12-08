@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2025 a las 18:54:41
+-- Tiempo de generación: 08-12-2025 a las 19:33:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -194,10 +194,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `pwd`, `nombre_completo`, `email`, `rol`) VALUES
-('DGenBor', 'Basilisco22', 'Darío Genal Borrego', 'dario@intecgib.com', 'admin'),
-('IParedes', 'OdooAdmin', 'Inmaculada Paredes', 'administration@intecgib.com', 'admin'),
-('JCarLuq', 'WhereWindsMeet', 'Juan Carlos Luque', 'carlos@intecgib.com', 'editor'),
-('SRodGar', 'GloriousEvolution', 'Sergio Rodríguez García', 'sergio@intecgib.com', 'editor');
+('DGenBor', '774eb822735b49f13a6ec828e125a2a4', 'Darío Genal Borrego', 'dario@intecgib.com', 'admin'),
+('IParedes', 'd01bb40719398887fea806c4562a5fe7', 'Inmaculada Paredes', 'administration@intecgib.com', 'admin'),
+('JCarLuq', 'a4178f6c42f6b453d1d33c8df19fd0d0', 'Juan Carlos Luque', 'carlos@intecgib.com', 'editor'),
+('SRodGar', 'e86c188c03cd470038c9b2166a519b29', 'Sergio Rodríguez García', 'sergio@intecgib.com', 'editor');
 
 --
 -- Índices para tablas volcadas
