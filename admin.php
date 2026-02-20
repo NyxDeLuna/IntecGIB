@@ -18,6 +18,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - IntecGIB</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calendar.css">
     <style>
         .admin-container {
             display: flex;
@@ -349,6 +350,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
                 <ul>
                     <li><a href="?view=reviews" class="<?php echo $view === 'reviews' ? 'active' : ''; ?>"><span style="font-size: 1.3rem;">⭐</span> Reviews</a></li>
                     <li><a href="?view=projects" class="<?php echo $view === 'projects' ? 'active' : ''; ?>"><span style="font-size: 1.3rem;">🏗️</span> Projects</a></li>
+                    <li><a href="?view=calendar" class="<?php echo $view === 'calendar' ? 'active' : ''; ?>"><span style="font-size: 1.3rem;">📅</span> Calendar</a></li>
                 </ul>
             </nav>
         </aside>
@@ -364,7 +366,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
             </div>
 
             <div class="admin-header">
-                <h1><?php echo $view === 'reviews' ? '⭐ Reviews Management' : '🏗️ Projects Management'; ?></h1>
+                <h1><?php echo $view === 'reviews' ? '⭐ Reviews Management' : ($view === 'projects' ? '🏗️ Projects Management' : '📅 Calendar'); ?></h1>
             </div>
 
             <?php if ($view === 'reviews'): ?>
@@ -406,6 +408,8 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
                 <div id="projectsView">
                     <!-- Projects management will be here -->
                 </div>
+            <?php elseif ($view === 'calendar'): ?>
+                <div id="calendarContainer"></div>
             <?php endif; ?>
         </main>
     </div>
@@ -508,7 +512,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
                 // Sort by date desc
                 reviews.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-                let html = '<table class="reviews-table"><thead><tr><th>👤 Name</th><th>⭐ Rating</th><th>💬 Comment</th><th>📅 Date</th><th>📊 Status</th><th>⚙️ Actions</th></tr></thead><tbody>';
+                let html = '<table class="reviews-table"><thead><tr><th>👤 Name</th><th>📧 Email</th><th>⭐ Rating</th><th>💬 Comment</th><th>📅 Date</th><th>📊 Status</th><th>⚙️ Actions</th></tr></thead><tbody>';
                 reviews.forEach(r => {
                     const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
                     const status = r.approved ? 'approved' : 'pending';
@@ -517,6 +521,7 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
                     const comment = r.comment.substring(0, 60) + (r.comment.length > 60 ? '...' : '');
                     html += `<tr>
                         <td><strong>${r.name}</strong></td>
+                        <td><a href="mailto:${r.email}" style="color: #007bff; text-decoration: none; cursor: pointer;" title="Send email to ${r.email}">${r.email}</a></td>
                         <td class="review-rating">${stars}</td>
                         <td title="${r.comment}"><em>${comment}</em></td>
                         <td>${date}</td>
@@ -649,6 +654,17 @@ $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
             const url = 'api/export_reviews_pdf.php?' + params.toString();
             window.open(url, '_blank');
         }
+
+        // Placeholder para inicialización de calendario
+    </script>
+    <script src="js/calendar.js"></script>
+    <script>
+        // Inicializar calendario si estamos en esa vista (después de cargar calendar.js)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof CalendarWidget !== 'undefined' && '<?php echo $view; ?>' === 'calendar') {
+                CalendarWidget.init('calendarContainer');
+            }
+        });
     </script>
 </body>
 </html>
