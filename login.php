@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
     $response = ['success' => false, 'message' => ''];
     
     if (empty($username) || empty($password)) {
-        $response['message'] = "Por favor, completa todos los campos";
+        $response['message'] = "Please fill in all fields";
         echo json_encode($response);
         exit;
     }
@@ -54,14 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
     $conexion = mysqli_connect("localhost", "root", "", "intecgib_db");
     
     if (!$conexion) {
-        $response['message'] = "Error de conexión a la base de datos";
+        $response['message'] = "Database connection error";
         echo json_encode($response);
         exit;
     }
     
     mysqli_query($conexion, "SET NAMES 'utf8'");
     
-    $sql = "SELECT id, pwd, nombre_completo, rol, email FROM users WHERE id = ? AND pwd = ?";
+    $sql = "SELECT id, pwd, nombre_completo, rol, email, country_code, phone, address, avatar FROM users WHERE id = ? AND pwd = ?";
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $username, $password);
     mysqli_stmt_execute($stmt);
@@ -76,14 +76,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
         $_SESSION['user_name'] = $row["nombre_completo"];
         $_SESSION['user_role'] = $row["rol"];
         $_SESSION['user_email'] = $row["email"];
+        $_SESSION['user_country_code'] = $row["country_code"];
+        $_SESSION['user_phone'] = $row["phone"];
+        $_SESSION['user_address'] = $row["address"];
+        $_SESSION['user_avatar'] = $row["avatar"];
         $_SESSION['login_time'] = time();
         
         $response['success'] = true;
-        $response['message'] = "Login exitoso";
+        $response['message'] = "Login successful";
         $response['redirect'] = $redirect_to;
         
     } else {
-        $response['message'] = "Usuario o contraseña incorrectos";
+        $response['message'] = "Invalid username or password";
     }
     
     mysqli_stmt_close($stmt);
@@ -98,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Inicio de sesión - IntecGIB</title>
+    <title>Login - IntecGIB</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -221,11 +225,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
             <img src="img/misc/logo_intecgib.png" alt="IntecGIB Logo">
         </div>
         
-        <h1>Inicio de Sesión</h1>
+        <h1>Login</h1>
         
         <?php if ($redirect_to !== 'index.html' && $redirect_to !== 'login.php'): ?>
         <div class="redirect-info">
-            🔄 Serás redirigido a: <strong><?php echo htmlspecialchars($redirect_to); ?></strong>
+            🔄 You will be redirected to: <strong><?php echo htmlspecialchars($redirect_to); ?></strong>
         </div>
         <?php endif; ?>
         
@@ -234,9 +238,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
         
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <div class="success" style="display: block;">
-                ✅ Ya estás logueado como: <strong><?php echo $_SESSION['user_name']; ?></strong>
+                ✅ You are already logged in as: <strong><?php echo $_SESSION['user_name']; ?></strong>
             </div>
-            <p>Serás redirigido automáticamente...</p>
+            <p>You will be redirected automatically...</p>
             <script>
                 setTimeout(() => {
                     window.location.href = '<?php echo $redirect_to === "login.php" ? "index.html" : $redirect_to; ?>';
@@ -249,23 +253,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
             
             <table>
                 <tr>
-                    <td><label for="txtUsuario">Usuario:</label></td>
+                    <td><label for="txtUsuario">Username:</label></td>
                     <td>
                         <input type="text" name="txtUsuario" id="txtUsuario" required 
-                               placeholder="Ingresa tu usuario">
+                               placeholder="Enter your username">
                     </td>
                 </tr>
                 <tr>
-                    <td><label for="txtContrasenia">Contraseña:</label></td>
+                    <td><label for="txtContrasenia">Password:</label></td>
                     <td>
                         <input type="password" name="txtContrasenia" id="txtContrasenia" required 
-                               placeholder="Ingresa tu contraseña">
+                               placeholder="Enter your password">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <button type="submit" class="login-button" id="btnEnviar">
-                            Iniciar Sesión
+                            Log In
                         </button>
                     </td>
                 </tr>
@@ -275,6 +279,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
         <a href="<?php echo $redirect_to === 'login.php' ? 'index.html' : $redirect_to; ?>" class="back-link">
             ← Volver a <?php echo htmlspecialchars($redirect_to === 'login.php' ? 'Inicio' : $redirect_to); ?>
         </a>
+        <p style="margin-top:10px;font-size:14px;">
+            Don’t have an account? <a href="register.php">Sign up</a>
+            <span style="color:#ccc; margin:0 6px;">|</span>
+            <a href="forgot_password.php">Forgot password?</a>
+        </p>
         
         <?php endif; ?>
     </div>
@@ -480,7 +489,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_login'])) {
                                 })
                                 .catch(error => {
                                         console.error('Error:', error);
-                                        errorMsg.textContent = 'Error de conexión. Intenta nuevamente.';
+                                        errorMsg.textContent = 'Connection error. Please try again.';
                                         errorMsg.style.display = 'block';
                                         button.innerHTML = originalText;
                                         button.disabled = false;

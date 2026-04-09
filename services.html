@@ -22,12 +22,20 @@
                 <li class="nav-item"><a href="services.html" class="nav-link active">Services</a></li>
 				<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
-                <li class="nav-item">
-                    <a href="login.php" class="user-icon" id="userLogin">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                        </svg>
-                    </a>
+                <li class="nav-item user-menu">
+                    <div class="user-dropdown" id="userDropdown">
+                        <button class="user-button" id="userButton">
+                            <span id="userName">Login</span>
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" class="dropdown-arrow">
+                                <path d="M6 8L2 4h8z"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a href="profile.php" class="dropdown-item">Profile</a>
+                            <a href="purchase_history.php" class="dropdown-item">Purchase History</a>
+                            <a href="logout.php" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -128,7 +136,8 @@
 
                 <div class="form-group">
                     <label for="customerName">Full Name</label>
-                    <input type="text" id="customerName" name="customerName" placeholder="Your full name" required>
+                    <input type="text" id="customerName" name="customerName" placeholder="John Doe" required 
+                           pattern="[A-Za-z\s]{2,}" title="Please enter a valid name (at least 2 characters)">
                 </div>
 
                 <div class="form-group">
@@ -138,17 +147,46 @@
 
                 <div class="form-group">
                     <label for="customerPhone">Phone Number</label>
-                    <input type="tel" id="customerPhone" name="customerPhone" placeholder="+350 540 12345" required>
+                    <div class="phone-input-group">
+                        <select id="countryCode" name="countryCode" class="country-select" required>
+                            <option value="+44">🇬🇧 United Kingdom (+44)</option>
+                            <option value="+34">🇪🇸 Spain (+34)</option>
+                            <option value="+39">🇮🇹 Italy (+39)</option>
+                            <option value="+33">🇫🇷 France (+33)</option>
+                            <option value="+49">🇩🇪 Germany (+49)</option>
+                            <option value="+31">🇳🇱 Netherlands (+31)</option>
+                            <option value="+32">🇧🇪 Belgium (+32)</option>
+                            <option value="+41">🇨🇭 Switzerland (+41)</option>
+                            <option value="+43">🇦🇹 Austria (+43)</option>
+                            <option value="+46">🇸🇪 Sweden (+46)</option>
+                            <option value="+47">🇳🇴 Norway (+47)</option>
+                            <option value="+48">🇵🇱 Poland (+48)</option>
+                            <option value="+30">🇬🇷 Greece (+30)</option>
+                            <option value="+351">🇵🇹 Portugal (+351)</option>
+                            <option value="+1">🇺🇸 United States (+1)</option>
+                            <option value="+1">🇨🇦 Canada (+1)</option>
+                            <option value="+61">🇦🇺 Australia (+61)</option>
+                            <option value="+64">🇳🇿 New Zealand (+64)</option>
+                            <option value="+358">🇫🇮 Finland (+358)</option>
+                            <option value="+45">🇩🇰 Denmark (+45)</option>
+                        </select>
+                        <input type="tel" id="customerPhone" name="customerPhone" placeholder="540 12345" required 
+                               pattern="[0-9\s\-\+]{7,}" title="Please enter a valid phone number">
+                    </div>
+                    <small style="color: #666; margin-top: 5px; display: block;">Enter phone number without country code</small>
                 </div>
 
                 <div class="form-group">
                     <label for="serviceAddress">Service Address</label>
-                    <textarea id="serviceAddress" name="serviceAddress" placeholder="Full address where service will be performed" required rows="3"></textarea>
+                    <input type="text" id="serviceAddress" name="serviceAddress" placeholder="Street address" required>
+                    <input type="text" id="serviceCity" name="serviceCity" placeholder="City" required style="margin-top: 8px;">
+                    <input type="text" id="servicePostalCode" name="servicePostalCode" placeholder="Postal Code" required style="margin-top: 8px;">
+                    <input type="text" id="serviceCountry" name="serviceCountry" placeholder="Country" required style="margin-top: 8px;">
                 </div>
 
                 <div class="form-group">
                     <label for="serviceDetails">Service Details / Special Requirements</label>
-                    <textarea id="serviceDetails" name="serviceDetails" placeholder="Please describe your specific needs, existing systems, or any special requirements..." rows="5"></textarea>
+                    <textarea id="serviceDetails" name="serviceDetails" placeholder="Please describe your specific needs, existing systems, or any special requirements..." rows="5" required></textarea>
                 </div>
 
                 <div class="price-summary">
@@ -189,6 +227,19 @@
             </form>
 		</div>
     </main>
+
+    <!-- Session Import Modal -->
+    <div id="sessionImportModal" class="modal">
+        <div class="modal-content">
+            <span id="importSessionClose" class="close">&times;</span>
+            <h2>Session token detected!</h2>
+            <p>Would you like to import your data in the form?</p>
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                <button id="importSessionNo" class="cta-button" style="background:#777;">No</button>
+                <button id="importSessionYes" class="cta-button">Yes</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Success Modal -->
     <div id="successModal" class="modal">

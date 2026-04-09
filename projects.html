@@ -21,12 +21,20 @@
 				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
                 <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
-                <li class="nav-item">
-                    <a href="login.php" class="user-icon" id="userLogin">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                        </svg>
-                    </a>
+                <li class="nav-item user-menu">
+                    <div class="user-dropdown" id="userDropdown">
+                        <button class="user-button" id="userButton">
+                            <span id="userName">Login</span>
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" class="dropdown-arrow">
+                                <path d="M6 8L2 4h8z"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a href="profile.php" class="dropdown-item">Profile</a>
+                            <a href="purchase_history.php" class="dropdown-item">Purchase History</a>
+                            <a href="logout.php" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

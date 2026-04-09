@@ -8,6 +8,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
+// Only admin/editor roles can access admin panel
+if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['admin', 'editor'])) {
+    header('Location: login.php?error=access_denied');
+    exit;
+}
+
 // Determine current view
 $view = isset($_GET['view']) ? $_GET['view'] : 'reviews';
 ?>

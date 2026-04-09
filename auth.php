@@ -7,6 +7,11 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         'loggedIn' => true,
         'user' => $_SESSION['user_id'] ?? '',
         'name' => $_SESSION['user_name'] ?? '',
+        'email' => $_SESSION['user_email'] ?? '',
+        'country_code' => $_SESSION['user_country_code'] ?? '',
+        'phone' => $_SESSION['user_phone'] ?? '',
+        'address' => $_SESSION['user_address'] ?? '',
+        'avatar' => $_SESSION['user_avatar'] ?? '',
         'role' => $_SESSION['user_role'] ?? '',
         'loginTime' => $_SESSION['login_time'] ?? ''
     ]);

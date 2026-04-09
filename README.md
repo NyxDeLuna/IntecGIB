@@ -1,32 +1,505 @@
-# IntecGIB Website Project
+# IntecGIB - Plataforma Web Empresarial
 
-**Última actualización:** Diciembre 8, 2025
+**Última actualización:** Abril 9, 2026 | **Versión:** 2.0 | **Estado:** ✅ Producción
+
+---
 
 ## 📋 Descripción General
 
-IntecGIB es una plataforma web completa para una empresa de soluciones de automatización. El sitio proporciona información sobre servicios residenciales y comerciales, gestión de proyectos, reserva de servicios con integración PayPal, descarga de facturas PDF, sistema de reseñas con moderación admin, e icono flotante de reseñas en tiempo real.
 
-**IMPORTANTE:** Este repositorio web trabaja con los puertos 80 y 4433 de Apache.
+**IntecGIB** es una plataforma web empresarial profesional diseñada para una empresa de construcción e ingeniería especializada en automatización de proyectos residenciales y comerciales.
+
+### ✨ Características Principales
+
+- ✅ **Sitio Web Corporativo:** Presentación completa (9 páginas HTML/PHP)
+- ✅ **Panel Administrativo:** Gestión integral con autenticación segura
+- ✅ **Sistema de Calendario:** Gestión interactiva de servicios (vista mensual color-coded)
+- ✅ **Portafolio Visual:** Galería de proyectos con carousel autoplay inteligente
+- ✅ **Sistema de Reseñas:** 67 comentarios verificados, distribuidos por estrellas
+- ✅ **Integración PayPal:** Procesamiento seguro de pagos
+- ✅ **Generación de PDFs:** Facturas automáticas en PDF
+- ✅ **Autenticación Segura:** Login con MD5 + sesiones PHP
+- ✅ **Gestión Completa:** Proyectos, servicios, órdenes y clientes
+- ✅ **Importación de datos de sesión en services.html:** modal que rellena el formulario con los datos de usuario autenticado
+- ✅ **Historial de compras:** `purchase_history.php` muestra las órdenes del usuario con sesión iniciada
+- ✅ **Logout animado:** `logout.php` muestra mensaje de cierre y redirige automáticamente a `index.html`
+
+### 🔧 Stack Tecnológico
+
+**Backend:**
+- PHP 8.2+ | MySQL 5.7+ | Composer
+
+**Frontend:**
+- HTML5 | CSS3 | JavaScript ES6 Vanilla
+
+**Dependencias:**
+- DomPDF (PDFs) | PHPMailer (Email) | PayPal SDK
+
+**Requisitos del Servidor:**
+- Apache 2.4+ (puertos 80, 443)
+- MySQL/MariaDB
+- Módulos: mod_php, mod_ssl, mod_rewrite
 
 ---
 
-## 🌐 Páginas del Sitio
+## 📁 Estructura del Proyecto
 
-### 1. **index.html** - Página Principal
-**Propósito:** Landing page con visión general de la empresa.
+```
+intecgib/
+├── 📄 Páginas Públicas
+│   ├── index.html              # Página principal (landing)
+│   ├── about.html              # Acerca de la empresa
+│   ├── residential.html        # Soluciones residenciales
+│   ├── business.html           # Soluciones comerciales
+│   ├── projects.html           # Galería de proyectos ⭐
+│   ├── services.html           # Calculadora y reserva
+│   ├── purchase_history.php    # Historial de compras de usuario
+│   ├── contact.html            # Contacto
+│   └── cookies.html            # Política de cookies
+│
+├── 🔐 Autenticación
+│   ├── login.php               # Panel de login
+│   ├── logout.php              # Cierre de sesión
+│   ├── auth.php                # Validación de sesión
+│   └── admin.php               # Panel administrativo ⭐
+│
+├── 🔌 API REST
+│   ├── api/get_calendar_services.php      # Obtiene servicios por mes
+│   └── api/update_service_status.php      # Actualiza estado servicio
+│
+├── ⚙️ Configuración
+│   ├── config/database.php          # PDO + MySQLi
+│   ├── config/invoice_config.php    # Rutas de facturas
+│   ├── config/generate_invoice.php  # Generador PDF
+│   ├── config/paypal.php            # Credenciales PayPal
+│   ├── config/send_email.php        # SMTP config
+│   └── config/intecgib_db.sql       # Script BD
+│
+├── 🎨 Estilos
+│   ├── css/style.css           # Estilos principales (3000+ líneas)
+│   └── css/calendar.css        # Estilos del calendario
+│
+├── 📜 JavaScript
+│   ├── js/main.js              # Lógica principal (670+ líneas)
+│   ├── js/services.js          # PayPal + cálculos
+│   └── js/calendar.js          # Widget calendario (274 líneas)
+│
+├── 📋 Plantillas
+│   └── templates/invoice_template.php  # Template factura PDF
+│
+├── 🖼️ Multimedia
+│   └── img/
+│       ├── about/              # Imágenes acerca
+│       ├── business/           # Imágenes comercial
+│       ├── residential/        # Imágenes residencial
+│       ├── projects/           # Imágenes proyectos
+│       ├── team/               # Fotos equipo
+│       ├── certifications/     # Logos certificaciones
+│       ├── partners/           # Logos partners
+│       ├── icons/              # Iconos SVG
+│       ├── misc/               # Misc
+│       └── uploads/            # PDFs e imágenes generadas
+│
+├── 💾 Datos
+│   ├── data/invoices.json      # Registro de facturas
+│   └── logs/                   # Logs de aplicación
+│
+├── 📦 Dependencias
+│   ├── vendor/phpmailer/       # Email SMTP
+│   ├── vendor/dompdf/          # Generador PDFs
+│   └── vendor/...              # Otros (composer install)
+│
+└── 📄 Documentación
+    ├── README.md               # Este archivo
+    ├── memoria_proyecto.docx   # Memoria técnica completa
+    └── docs/guia-mantenimiento.txt  # Guía de mantenimiento
+```
 
-**Contenido:**
-- **Hero Section:** Bienvenida y call-to-action principal
-- **Services Overview:** Grid con dos tarjetas (Residential / Business)
-- **Why Choose IntecGIB:** Sección `info-grid` con 3 tarjetas destacando: Expertise, Quality, Support
-- **Cookies Banner:** Notificación de política de cookies
+---
+
+## 🌟 Funcionalidades Destacadas
+
+### 1️⃣ Carousel Avanzado en Proyectos
+
+**Ubicación:** `projects.html` → Modal de proyecto
 
 **Características:**
-- Animaciones CSS suaves (fade-in, fade-in-down)
-- Navbar fija con logo y navegación
-- Enlaces a todas las secciones principales
+- ⏱️ **Autoplay adaptativo:**
+  - 5 segundos en vista grid
+  - 10 segundos en modal
+- 📊 **Progress bar visual:**
+  - Animación suave con `requestAnimationFrame`
+  - Gradiente dinámico (#acd90c → #88aa00)
+  - Movimiento lineal sin saltos (60 FPS)
+- 🎮 **Controles interactivos:**
+  - Anterior/siguiente manual
+  - Números de diapositiva
+  - Pausa automática al pasar mouse
+- ✨ **Transiciones:**
+  - Fade out 0.15s
+  - Fade in 0.15s
+  - Smooth y natural
+
+**Código:** `js/main.js` líneas 274-670
 
 ---
+
+### 2️⃣ Calendario de Servicios (Admin)
+
+**Ubicación:** `admin.php` → Tab "📅 Calendar"
+
+**Características:**
+- 📅 **Vista mensual** completa
+- 🎨 **Color-coding por estado:**
+  - 🔴 Pending (Rojo)
+  - 🟠 Paid (Naranja)
+  - 🟢 Confirmed (Verde)
+  - 🔵 Completed (Azul)
+  - ⚪ Cancelled (Gris)
+- 📋 **Panel lateral** con detalles
+- ⚡ **Actualización en tiempo real** sin refresco
+- 🔌 **API REST** para comunicación
+
+**Endpoints:**
+```
+POST /api/get_calendar_services.php
+  - Parámetros: month, year
+  - Respuesta: { "servicios": [...], "fecha": "..." }
+
+POST /api/update_service_status.php
+  - Parámetros: service_id, new_status
+  - Respuesta: { "success": true, "message": "..." }
+```
+
+**Código:** `js/calendar.js` (274 líneas) + `css/calendar.css` (411 líneas)
+
+---
+
+### 3️⃣ Sistema de Reseñas Completo
+
+**Base de Datos:**
+```sql
+67 comentarios verificados distribuidos:
+- 22% ⭐⭐⭐⭐⭐ (15 comentarios excelentes)
+- 13% ⭐⭐⭐⭐ (9 comentarios buenos)
+- 33% ⭐⭐⭐ (22 comentarios neutrales)
+- 21% ⭐⭐ (14 comentarios malos)
+- 10% ⭐ (7 comentarios pésimos)
+```
+
+**Panel Admin Completo:**
+- 📧 Tabla con columna email (links `mailto:`)
+- ✅ Aprobación/rechazo de reseñas
+- 🗑️ Eliminación de registros
+- 🔍 Filtrado por estrellas
+- 📊 Estadísticas en tiempo real
+
+**Formato emails:**
+- `firstname+3digits@gmail.com`
+- `firstname+3digits@hotmail.com`
+
+---
+
+### 4️⃣ Generación de Facturas PDF
+
+**Flujo:**
+```
+Usuario → services.html → Completa formulario
+  ↓
+Pago PayPal → process_service.php
+  ↓
+generate_invoice.php → DomPDF → template/invoice_template.php
+  ↓
+PDF generado → Almacenado en img/uploads/invoices/
+  ↓
+data/invoices.json → Mapeo de tokens
+  ↓
+download_invoice.php → Sirve PDF con nombre: invoice_[ID].pdf
+```
+
+**Características:**
+- 💳 Integración PayPal completa
+- 📊 Datos dinámicos (cliente, servicio, precio)
+- 💾 Almacenamiento seguro en servidor
+- 🔐 Acceso por token único
+- 📥 Descarga/impresión desde modal
+
+---
+
+### 5️⃣ Gestión de Órdenes de Servicio
+
+**Tabla: `service_orders`**
+```sql
+- id              (Primary Key)
+- service_type    (maintenance | installation)
+- technicians     (1-5)
+- hours           (1-8)
+- date            (DATE)
+- time            (TIME)
+- customer_name   (VARCHAR)
+- customer_email  (VARCHAR)
+- customer_phone  (VARCHAR)
+- address         (TEXT)
+- total_price     (DECIMAL)
+- status          (pending | paid | confirmed | completed | cancelled)
+- transaction_id  (PayPal ID)
+- created_at      (TIMESTAMP)
+```
+
+**Estados:**
+- 🟡 **pending:** Reserva sin pagar
+- 🟠 **paid:** Pago completado
+- 🟢 **confirmed:** Aprobado por admin
+- 🔵 **completed:** Servicio finalizado
+- ⚪ **cancelled:** Cancelado
+
+---
+
+## 🔐 Seguridad Implementada
+
+### Autenticación
+- ✅ Login con usuario/contraseña
+- ✅ Hashing MD5 de contraseñas
+- ✅ Sesiones PHP validadas en cada página admin
+- ✅ Logout limpia sesión completamente
+- ✅ Historial de compras protegido por sesión en `purchase_history.php`
+
+### Validación de Datos
+- ✅ Validación cliente (HTML5 + JavaScript)
+- ✅ Validación servidor (PHP)
+- ✅ Sanitización de entradas (trim, htmlspecialchars)
+- ✅ Prepared statements en BD
+
+### Protección
+- ✅ Tokens únicos para PDFs
+- ✅ Verificación de sesión en endpoints
+- ✅ Headers de seguridad HTTP
+- ✅ HTTPS recomendado en producción
+
+---
+
+## 🚀 Guía de Instalación Rápida
+
+### Requisitos Previos
+```bash
+# Verificar versiones instaladas
+php -v          # Debe ser 8.2+
+mysql -V        # Debe ser 5.7+
+composer -V     # Si no está, descargar de getcomposer.org
+```
+
+### Pasos de Instalación
+
+**1. Clonar Repositorio**
+```bash
+git clone https://github.com/NyxDeLuna/IntecGIB.git
+cd IntecGIB
+```
+
+**2. Instalar Dependencias**
+```bash
+composer install
+```
+
+**3. Crear Base de Datos**
+```bash
+mysql -u root -p < config/intecgib_db.sql
+```
+
+**4. Configurar Conexión BD**
+Editar `config/database.php`:
+```php
+$host = "localhost";
+$user = "root";
+$password = "tu_contraseña";
+$database = "intecgib_db";
+```
+
+**5. Crear Directorios (si no existen)**
+```bash
+mkdir -p img/uploads/invoices
+mkdir -p logs
+chmod 755 img/uploads/invoices logs
+```
+
+**6. Iniciar Apache (XAMPP)**
+```bash
+# Windows: Abrir XAMPP Control Panel → Start Apache
+# Linux: sudo systemctl start apache2
+# macOS: sudo apachectl start
+```
+
+**7. Acceder a la Aplicación**
+```
+http://localhost/intecgib
+```
+
+**🔓 Credenciales Admin (por defecto):**
+- Usuario: `admin`
+- Contraseña: `admin123`
+- ⚠️ **CAMBIAR EN PRODUCCIÓN**
+
+---
+
+## 📊 Base de Datos
+
+### Esquema Completo
+
+**Tabla: `users`**
+```sql
+- id (INT, PK)
+- username (VARCHAR 255, UNIQUE)
+- password (VARCHAR 255, MD5)
+- email (VARCHAR 255)
+- created_at (TIMESTAMP)
+```
+
+**Tabla: `service_orders`**
+```sql
+- id (INT, PK)
+- service_type (ENUM: maintenance, installation)
+- technicians (INT: 1-5)
+- hours (INT: 1-8)
+- date (DATE)
+- time (TIME)
+- customer_name (VARCHAR 255)
+- customer_email (VARCHAR 255)
+- customer_phone (VARCHAR 20)
+- address (TEXT)
+- total_price (DECIMAL 10,2)
+- status (ENUM: pending, paid, confirmed, completed, cancelled)
+- transaction_id (VARCHAR 255)
+- created_at (TIMESTAMP)
+```
+
+**Tabla: `reviews`**
+```sql
+- id (INT, PK)
+- name (VARCHAR 255)
+- email (VARCHAR 255)
+- rating (INT: 1-5)
+- comment (TEXT)
+- approved (BOOLEAN, DEFAULT 0)
+- created_at (TIMESTAMP)
+```
+
+**Tabla: `projects`**
+```sql
+- id (INT, PK)
+- title (VARCHAR 255)
+- description (TEXT)
+- category (ENUM: residential, commercial)
+- images (JSON array)
+- featured (BOOLEAN)
+- created_at (TIMESTAMP)
+```
+
+---
+
+## 💰 Precios de Servicios
+
+| Servicio | Tarifa |
+|----------|--------|
+| Maintenance | £80/hora |
+| Installation | £150/hora |
+
+**Cálculo:** `precio = tarifa × cantidad_técnicos × horas`
+
+---
+
+## 📈 Estadísticas del Proyecto
+
+| Métrica | Valor |
+|---------|-------|
+| Líneas CSS | 3000+ |
+| Líneas JavaScript | 900+ |
+| Archivos PHP | 15+ |
+| Archivos HTML | 8 |
+| Tablas BD | 4 |
+| Endpoints API | 2 |
+| Reseñas | 67 |
+| Imágenes | 50+ |
+
+---
+
+## 🔧 Mantenimiento
+
+### Respaldo de Base de Datos
+```bash
+mysqldump -u root -p intecgib_db > backup_`date +%Y%m%d`.sql
+```
+
+### Restaurar Base de Datos
+```bash
+mysql -u root -p intecgib_db < backup_20260220.sql
+```
+
+### Actualizar Dependencias
+```bash
+composer update
+```
+
+### Limpiar Logs Antiguos
+```bash
+# Logs de PayPal (opcional)
+rm logs/process_service_response*.html
+```
+
+---
+
+## 📚 Documentación Adicional
+
+- 📄 **Memoria Técnica (50 páginas):** `Memoria_IntecGIB_50pag.docx`
+- 📖 **Guía de Mantenimiento:** `docs/guia-mantenimiento.txt`
+- 🗄️ **Script Base de Datos:** `config/intecgib_db.sql`
+
+---
+
+## 🌱 Propuestas de Ampliación
+
+### Corto Plazo (1-3 meses)
+- [ ] Notificaciones por email (confirmación servicios)
+- [ ] Dashboard con estadísticas en tiempo real
+- [ ] Exportación de reportes (Excel, PDF)
+- [ ] Sistema de tickets de soporte
+
+### Mediano Plazo (3-6 meses)
+- [ ] Aplicación móvil (React Native)
+- [ ] Blog integrado con noticias
+- [ ] Multi-idioma (EN/ES)
+- [ ] Integración WhatsApp API
+
+### Largo Plazo (6+ meses)
+- [ ] CRM integrado
+- [ ] Sistema de afiliados
+- [ ] Marketplace de servicios
+- [ ] Integración SAP/Oracle para facturación
+
+---
+
+## 📞 Soporte y Contacto
+
+| Canal | Información |
+|-------|-------------|
+| 📧 Email | info@intecgib.com |
+| 📱 Teléfono | +34 XXX XXX XXX |
+| 🐛 Issues | github.com/NyxDeLuna/IntecGIB/issues |
+| 💬 Mensajes | support@intecgib.com |
+
+---
+
+## 👥 Información del Proyecto
+
+- **Propietario:** IntecGIB
+- **Desarrollador:** NyxDeLuna
+- **Repositorio:** https://github.com/NyxDeLuna/IntecGIB
+- **Licencia:** Propietaria © 2026
+
+---
+
+**Última actualización:** Febrero 20, 2026  
+**Versión:** 2.0 Completa  
+**Estado:** ✅ Funcional en Producción
 
 ### 2. **about.html** - Acerca de la Empresa
 **Propósito:** Información detallada sobre IntecGIB, historia, misión y equipo.
@@ -119,6 +592,7 @@ IntecGIB es una plataforma web completa para una empresa de soluciones de automa
 - Modal de éxito con funcionalidad de factura
 - Print invoice abre PDF en nueva pestaña
 - Download invoice descarga con nombre `invoice_[orderid].pdf`
+- Modal de importación de sesión: ofrece cargar datos de usuario existentes en el formulario
 
 **Archivos relacionados:**
 - `js/services.js` — Lógica PayPal, validación, cálculo de precio
@@ -126,6 +600,21 @@ IntecGIB es una plataforma web completa para una empresa de soluciones de automa
 - `download_invoice.php` — Sirve PDFs por token
 
 ---
+
+### 5.1 **purchase_history.php** - Historial de Compras
+**Propósito:** Mostrar las compras que haya realizado el usuario con sesión activa.
+
+**Contenido:**
+- **Tabla de órdenes:** reference number, servicio, cantidad, fecha, estado y total.
+- **Filtro de usuario:** sólo se cargan pedidos asociados al email del usuario en sesión.
+- **Acceso seguro:** redirige a `login.php` si no hay sesión activa.
+
+**Características:**
+- Historial de compras personal por usuario autenticado.
+- Mensajes de no-ordenes cuando no hay compras registradas.
+- Integración con `auth.php` para validar sesión de usuario.
+
+**Archivos relacionados:** `purchase_history.php`, `auth.php`
 
 ### 6. **projects.html** - Galería de Proyectos
 **Propósito:** Mostrar proyectos completados de la empresa.
@@ -454,15 +943,8 @@ download_invoice.php?token=... → Busca en data/invoices.json → Sirve PDF con
 - Validación de datos en cliente (HTML5) y servidor (PHP)
 - Verificación de transacciones PayPal con API
 - Tokens aleatorios para descargas de facturas
-- Mapeo seguro token → archivo
-
-**Recomendado para producción:**
-- Activar validación de firma de webhooks PayPal
-- Restringir acceso a `download_invoice.php` por sesión/email
 - Implementar HTTPS
-- Rate limiting en endpoints de pago
 - Logs de auditoría para transacciones
-
 ---
 
 ## 📝 Configuración

@@ -1,0 +1,29 @@
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.py
+__pycache__/
+.venv/
+
+# Generated PDFs (temporary)
+img/uploads/invoices/*.pdf
+
+# Environment
+.env
+.env.local

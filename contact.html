@@ -21,12 +21,20 @@
 				<li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
                 <li class="nav-item" id="adminNavLink" style="display: none;"><a href="admin.php" class="nav-link">Admin</a></li>
-                <li class="nav-item">
-                    <a href="login.php" class="user-icon" id="userLogin">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                        </svg> <!-- Icono SVG para usuario -->
-                    </a>
+                <li class="nav-item user-menu">
+                    <div class="user-dropdown" id="userDropdown">
+                        <button class="user-button" id="userButton">
+                            <span id="userName">Login</span>
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" class="dropdown-arrow">
+                                <path d="M6 8L2 4h8z"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <a href="profile.php" class="dropdown-item">Profile</a>
+                            <a href="purchase_history.php" class="dropdown-item">Purchase History</a>
+                            <a href="logout.php" class="dropdown-item">Logout</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -35,36 +43,43 @@
     <main class="container">
         <h1>Contact IntecGIB</h1>
         <div class="contact-container">
-            <div class="contact-info">
-                <h2>Get in Touch</h2>
-                <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-                <div class="contact-details">
-                    <p><strong>Email:</strong> support@intecgib.com</p>
-                    <p><strong>Phone:</strong> +350 54063766</p>
-                    <p><strong>Address:</strong> Europa Business Centre - Unit F18 - P.O. Box 1387 GX11 1AA Gibraltar</p>
-                </div>
-                <div class="direct-email" style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 5px;">
-                    <h3>Send Email Directly</h3>
-                    <p>Or click here to open your email client:</p>
-                    <a href="mailto:support@intecgib.com?subject=Contact from IntecGIB Website" 
-                       class="cta-button" style="display: inline-block; margin-top: 10px;">
-                        Open Email Client
-                    </a>
+            <!-- Contact Info Box -->
+            <div class="info-box">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                    <div class="contact-details">
+                        <p><strong>Email:</strong> support@intecgib.com</p>
+                        <p><strong>Phone:</strong> +350 54063766</p>
+                        <p><strong>Address:</strong> Europa Business Centre - Unit F18 - P.O. Box 1387 GX11 1AA Gibraltar</p>
+                    </div>
+                    <div class="direct-email" style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 5px;">
+                        <h3>Send Email Directly</h3>
+                        <p>Or click here to open your email client:</p>
+                        <a href="mailto:support@intecgib.com?subject=Contact from IntecGIB Website" 
+                           class="cta-button" style="display: inline-block; margin-top: 10px;">
+                            Open Email Client
+                        </a>
+                    </div>
                 </div>
             </div>
             
-            <form id="contactForm" class="contact-form">
-                <input type="text" name="name" id="contactName" placeholder="Your Name" required>
-                <input type="email" name="email" id="contactEmail" placeholder="Your Email" required>
-                <input type="text" name="subject" id="contactSubject" placeholder="Subject" required>
-                <textarea name="message" id="contactMessage" placeholder="Your Message" rows="6" required></textarea>
-                
-                <button type="submit" id="sendEmailBtn">Send Message</button>
-                
-                <div class="form-note" style="margin-top: 15px; font-size: 14px; color: #666; background: #fff3cd; padding: 10px; border-radius: 5px;">
-                    <p><strong>Note:</strong> This will open your email client with your message pre-filled. Just click "Send" in your email program.</p>
-                </div>
-            </form>
+            <!-- Google Maps Embed -->
+            <div class="map-container">
+                <h2 style="text-align: center; margin-bottom: 20px;">Our Location</h2>
+                <iframe 
+                    width="100%" 
+                    height="400" 
+                    style="border: none; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);"
+                    src="https://www.google.com/maps?q=36.128602,-5.352878&z=17&output=embed&hl=en" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                    📍 Europa Business Centre - Unit F18 - Gibraltar | Latitude: 36.128602 | Longitude: -5.352878
+                </p>
+            </div>
         </div>
         
         <div id="emailDataCopy" style="display: none; margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 5px;">
