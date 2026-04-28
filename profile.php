@@ -25,14 +25,52 @@ function resizeAvatarImage($sourcePath, $destinationPath, $mimeType, $maxWidth =
     $newWidth = max(1, (int) round($width * $scale));
     $newHeight = max(1, (int) round($height * $scale));
 
-    if($mimeType === 'image/jpeg'){
-        $src = imagecreatefromjpeg($sourcePath);
-    } elseif($mimeType === 'image/png'){
-        $src = imagecreatefrompng($sourcePath);
-    } elseif($mimeType === 'image/gif'){
-        $src = imagecreatefromgif($sourcePath);
+    // Prefer Imagick if available, otherwise use GD when installed.
+    if (class_exists('Imagick')) {
+        try {
+            $image = new Imagick($sourcePath);
+            if ($scale < 1) {
+                $image->setImageOrientation(Imagick::ORIENTATION_TOPLEFT);
+                $image->resizeImage($newWidth, $newHeight, Imagick::FILTER_LANCZOS, 1, true);
+            }
+            if ($mimeType === 'image/png') {
+                $image->setImageFormat('png');
+            } elseif ($mimeType === 'image/gif') {
+                $image->setImageFormat('gif');
+            } else {
+                $image->setImageFormat('jpeg');
+                $image->setImageCompressionQuality($jpegQuality);
+            }
+            $result = $image->writeImage($destinationPath);
+            $image->destroy();
+            return $result;
+        } catch (Exception $e) {
+            // Continue to GD fallback if Imagick fails.
+        }
+    }
+
+    if (extension_loaded('gd')) {
+        if($mimeType === 'image/jpeg'){
+            if (!function_exists('imagecreatefromjpeg')) {
+                return false;
+            }
+            $src = imagecreatefromjpeg($sourcePath);
+        } elseif($mimeType === 'image/png'){
+            if (!function_exists('imagecreatefrompng')) {
+                return false;
+            }
+            $src = imagecreatefrompng($sourcePath);
+        } elseif($mimeType === 'image/gif'){
+            if (!function_exists('imagecreatefromgif')) {
+                return false;
+            }
+            $src = imagecreatefromgif($sourcePath);
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        // No image library available: save the uploaded image file directly as a fallback.
+        return copy($sourcePath, $destinationPath);
     }
 
     if(!$src){
@@ -97,7 +135,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['saveProfile'])){
             if(!in_array($file['type'], $allowedTypes)){
                 $message = 'Only JPG, PNG and GIF files are allowed.';
             } elseif($file['size'] > $maxSize){
-                $message = 'File size must be less than 2MB.';
+                $message = 'File size must be less than 5MB.';
             } else {
                 // Validate image dimensions
                 $imageInfo = getimagesize($file['tmp_name']);
@@ -160,7 +198,9 @@ mysqli_close($conn);
     <style>
         body{background:#f0f4fb;margin:0;padding:0;font-family:Arial, sans-serif;}
         .profile-wrap{max-width:700px;margin:40px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 12px 24px rgba(0,0,0,.1);}
+        .profile-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;}
         .profile-wrap h1{margin:0 0 1rem;color:#333;}
+        .profile-header a{color:#0a74da;text-decoration:none;font-weight:600;font-size:0.95rem;}
         .profile-wrap label{font-weight:600;margin-top:12px;display:block;color:#444;}
         .profile-wrap input, .profile-wrap select{width:100%;padding:10px;margin-top:6px;border:1px solid #ccc;border-radius:8px;}
         .profile-wrap button{margin-top:16px;background:#0a74da;color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;}
@@ -176,7 +216,10 @@ mysqli_close($conn);
 </head>
 <body>
     <div class="profile-wrap">
-        <h1>My Profile</h1>
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <a href="index.html">Back to Home</a>
+        </div>
         <?php if($message): ?><div class="message"><?php echo htmlspecialchars($message ?? ''); ?></div><?php endif; ?>
         <form method="post" enctype="multipart/form-data">
             <div class="avatar-section">
@@ -192,11 +235,11 @@ mysqli_close($conn);
                     <input type="file" name="avatar" accept="image/*">
                     <div class="current-avatar">
                         <?php if($currentAvatar): ?>
-                            Current: <?php echo htmlspecialchars(basename($currentAvatar) ?? ''); ?>
+                            <!-- Current: <?php echo htmlspecialchars(basename($currentAvatar) ?? ''); ?> -->
                         <?php else: ?>
                             No avatar uploaded
                         <?php endif; ?>
-                        <br><small>Max 256x256px, 2MB, JPG/PNG/GIF</small>
+                        
                     </div>
                 </div>
             </div>

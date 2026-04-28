@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         $mensaje = 'Passwords do not match.';
     } elseif (strlen($password) < 6) {
         $mensaje = 'Password must be at least 6 characters.';
+    } elseif (!preg_match('/^(?=.*\d)[0-9\s\-\+]{7,}$/', $phone)) {
+        $mensaje = 'Please provide a valid phone number.';
     } else {
         $conn = mysqli_connect('localhost', 'root', '', 'intecgib_db');
         if (!$conn) {
@@ -98,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required minlength="6"></div>
             <div class="form-group"><label for="confirmPassword">Confirm Password</label><input type="password" id="confirmPassword" name="confirmPassword" required minlength="6"></div>
             <div class="form-group"><label for="countryCode">Country Code</label><select id="countryCode" name="countryCode"><option value="+44">🇬🇧 +44</option><option value="+34">🇪🇸 +34</option><option value="+1">🇺🇸 +1</option></select></div>
-            <div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" required></div>
+            <div class="form-group"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" required pattern="(?=.*\d)[0-9\s\-\+]{7,}" title="Enter a valid phone number with at least 7 digits" ></div>
             <div class="form-group"><label for="address">Address</label><input type="text" id="address" name="address"></div>
             <button type="submit" name="register" class="button">Register</button>
         </form>
